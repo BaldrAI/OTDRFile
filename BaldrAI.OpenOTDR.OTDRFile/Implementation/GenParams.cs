@@ -1,4 +1,6 @@
-﻿namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+
+namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
 
 public class GenParamsConfig(double speedOfLightMetresPerNanoSecond = 0.20394044761904762)
@@ -6,10 +8,10 @@ public class GenParamsConfig(double speedOfLightMetresPerNanoSecond = 0.20394044
     public double SpeedOfLightMetresPerNanoSecond = speedOfLightMetresPerNanoSecond; // Through fibre at the given wavelength
 }
 
-public class GenParams(Span<byte> data, int format, GenParamsConfig? config = null)
+public class GenParams(ref OTDRData data)
 {
-    private GenParamsData Data = new(data, format);
-    public GenParamsConfig Config = config ?? new GenParamsConfig();
+    private GenParamsData Data = data.GenParamsRaw;
+    private GenParamsConfig Config = new();
 
     public string Language
     {

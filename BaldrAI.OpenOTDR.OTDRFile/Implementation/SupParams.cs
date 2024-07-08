@@ -1,8 +1,10 @@
-﻿namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
 
-public class SupParams(Span<byte> data, int format)
+namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
+
+public class SupParams(ref OTDRData data)
 {
-    private SupParamsData Data = new(data, format);
+    private SupParamsData Data = data.SupParamsRaw;
 
     public string SupplierName
     {

@@ -3,16 +3,15 @@ using BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Internal;
 
-public class TraceList(List<TraceData> data, TraceConfig? config = null) : IList<Trace>
+public class TraceList(ref List<TraceData> data) : IList<Trace>
 {
     public List<TraceData> Data = data;
-    private TraceConfig Config = config ?? new TraceConfig();
 
     public IEnumerator<Trace> GetEnumerator()
     {
-        foreach (var traceData in Data)
+        for (var i = 0; i<Data.Count; i++)
         {
-            yield return new Trace(traceData, Config);
+            yield return new(Data[i]);
         }
     }
 
@@ -72,7 +71,7 @@ public class TraceList(List<TraceData> data, TraceConfig? config = null) : IList
 
     public Trace this[int index]
     {
-        get => new(Data[index], Config);
+        get => new(Data[index]);
         set => Data[index] = value.Data;
     }
 }

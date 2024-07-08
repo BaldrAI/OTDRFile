@@ -1,4 +1,5 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
@@ -14,10 +15,10 @@ public class FxdParamsConfig(
     public double IndexOfRefractionSF = indexOfRefractionSF;
 }
 
-public class FxdParams(Span<byte> data, int format, FxdParamsConfig? config = null)
+public class FxdParams(ref OTDRData data)
 {
-    private FxdParamsData Data = new(data, format);
-    public FxdParamsConfig Config = config ?? new FxdParamsConfig();
+    private FxdParamsData Data = data.FxdParamsRaw;
+    public FxdParamsConfig Config = new();
 
     public DateTime @DateTime
     {

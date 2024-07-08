@@ -1,4 +1,5 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
@@ -8,10 +9,10 @@ public class KeyEventsConfig(double speedOfLightMetresPerNanoSecond = 0.20394044
     public double DecibelsSF = decibelsSF;
 }
 
-public class KeyEvents(Span<byte> data, int format, KeyEventsConfig? config = null)
+public class KeyEvents(ref OTDRData data)
 {
-    private KeyEventsData Data = new(data, format);
-    private KeyEventsConfig Config = config ?? new KeyEventsConfig();
+    private KeyEventsData Data = data.KeyEventsRaw;
+    private KeyEventsConfig Config = new();
 
     public ushort NumberOfEvents => (ushort)Data.Events.Count;
     public KeyEventList Events => new(Data.Events);

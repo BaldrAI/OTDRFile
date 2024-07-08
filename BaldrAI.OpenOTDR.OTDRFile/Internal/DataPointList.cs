@@ -3,7 +3,7 @@ using BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Internal;
 
-public class DataPointList(List<ushort> data, TraceConfig? config = null) : IList<double>
+public class DataPointList(ref List<ushort> data, TraceConfig? config = null) : IList<double>
 {
     public List<ushort> Data = data;
     private TraceConfig Config = config ?? new TraceConfig();

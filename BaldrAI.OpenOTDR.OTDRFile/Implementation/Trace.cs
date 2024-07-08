@@ -13,17 +13,20 @@ public class Trace
 {
     public TraceData Data;
     private TraceConfig Config;
-    public uint NumberOfDataPoints => (uint)Data.DataPoints.Count;
-    public double ScalingFactor 
-    {
-        get => 1.0/Data.ScalingFactor;
-        set => Data.ScalingFactor = (ushort)(1/value);
-    }
-    public DataPointList DataPoints => new(Data.DataPoints, Config);
+    public DataPointList DataPoints;
 
-    public Trace(TraceData data, TraceConfig? config = null)
+    public Trace(TraceData data)
     {
-        Config = config ?? new TraceConfig(ScalingFactor);
         Data = data;
+        Config = new(ScalingFactor);
+        DataPoints = new(ref Data.DataPoints, Config);
+    }
+
+    public uint NumberOfDataPoints => (uint)Data.DataPoints.Count;
+
+    public double ScalingFactor
+    {
+        get => 1.0 / Data.ScalingFactor;
+        set => Data.ScalingFactor = (ushort)(1 / value);
     }
 }

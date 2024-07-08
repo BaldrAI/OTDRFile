@@ -1,24 +1,19 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
-public class DataPtsConfig(double? decibelsSF = null)
-{
-    public double DecibelsSF = decibelsSF ?? 0.001;
-}
 
-public class DataPts(Span<byte> data, int format, DataPtsConfig? config = null)
+public class DataPts(ref OTDRData data)
 {
-
-    public DataPtsData Data = new(data, format);
-    private DataPtsConfig Config = config ?? new DataPtsConfig();
+    public TraceList Traces = new(ref data.DataPtsRaw.Traces);
 
     public uint NumberOfDataPoints
     {
         get
         {
             uint num = 0;
-            foreach (var trace in Data.Traces)
+            foreach (var trace in Traces)
             {
                 num += trace.NumberOfDataPoints;
             }
@@ -29,8 +24,8 @@ public class DataPts(Span<byte> data, int format, DataPtsConfig? config = null)
 
     public ushort NumberOfTraces
     {
-        get => (ushort)Data.Traces.Count;
+        get => (ushort)Traces.Count;
     }
 
-    public TraceList Traces => new(Data.Traces);
+    
 }

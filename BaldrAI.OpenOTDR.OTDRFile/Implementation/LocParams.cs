@@ -1,10 +1,11 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
-public class LocParams(Span<byte> data, int format)
+public class LocParams(ref OTDRData data)
 {
-    private LocParamsData Data = new(data, format);
+    private LocParamsData Data = data.LocParamsRaw;
 
     public LocationList Locations => new(Data.Locations);
 }
