@@ -23,7 +23,7 @@ Whereas events such as bad splices and bends cause high dispersion (some wavelen
 OTDRs enable technicians to measure a fibre from each end to find issues that need repairing and confirming if the fibre is within spec and ready for service.
 
 ## Standards and compliance
-OTDRFile provides the ability to read data compliant with OpenSOD(RFC 0001).
+OTDRFile provides the ability to read data compliant with [OpenSOD - RFC 0001](https://github.com/BaldrAI/OpenSOD).
 It should also be able to load SOR data compliant with SR-4731 (Issues 1 & 2), but as we have never seen SR-4731, or any derrivatives thereof, we cannot verify this.
 
 ## Disclaimer
