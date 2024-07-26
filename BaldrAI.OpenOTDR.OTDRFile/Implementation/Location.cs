@@ -8,7 +8,6 @@ public class LocationConfig(double? longitudeSF = null, double? latitudeSF = nul
     // These are best-guesses based on the max-value of an `int32` and the required max-values for longitude and latitude.
 }
 
-
 public class Location
 {
     public LocationData Data { get; }
@@ -19,26 +18,31 @@ public class Location
         get => Data.LocationNumber;
         set => Data.LocationNumber = value;
     }
+
     public uint LocationDistance
     {
         get => Data.LocationDistance;
         set => Data.LocationDistance = value;
     }
+
     public short LocationDrift
     {
         get => Data.LocationDrift;
         set => Data.LocationDrift = value;
     }
+
     public ushort EventNumber
     {
         get => Data.EventNumber;
         set => Data.EventNumber = value;
     }
+
     public int Longitude
     {
         get => Data.Longitude;
         set => Data.Longitude = value;
     }
+
     public int Latitude
     {
         get => Data.Latitude;
@@ -68,6 +72,7 @@ public class Location
         get => Data.FiberIDExitingLocation;
         set => Data.FiberIDExitingLocation = value;
     }
+
     public string Comment
     {
         get => Data.Comment;
@@ -85,5 +90,4 @@ public class Location
         Data = data;
         Config = config ?? new LocationConfig();
     }
-
 }

@@ -22,11 +22,6 @@ public class LnkParamsData
                 throw new ArgumentException("unrecognised filetype");
         }
 
-        for (ushort i = 0; i < NumberOfLandmarks; i++)
-        {
-            Landmarks.Add(new LandmarkData(data, ref offset));
-        }
-
+        for (ushort i = 0; i < NumberOfLandmarks; i++) Landmarks.Add(new LandmarkData(data, ref offset));
     }
 }
-

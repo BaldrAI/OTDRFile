@@ -2,7 +2,9 @@
 
 public class KeyEventConfig(double speedOfLightMetresPerNanoSecond = 0.20394044761904762, double decibelsSF = 0.001)
 {
-    public double SpeedOfLightMetresPerNanoSecond = speedOfLightMetresPerNanoSecond; // Through fibre at the given wavelength
+    public double
+        SpeedOfLightMetresPerNanoSecond = speedOfLightMetresPerNanoSecond; // Through fibre at the given wavelength
+
     public double DecibelsSF = decibelsSF;
 }
 

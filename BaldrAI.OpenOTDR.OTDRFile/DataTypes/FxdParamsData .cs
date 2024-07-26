@@ -1,9 +1,6 @@
-﻿using System.Numerics;
-using System.Runtime.InteropServices.JavaScript;
-using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile;
-
 
 public class FxdParamsData
 {
@@ -78,27 +75,28 @@ public class FxdParamsData
         var offset = format switch
         {
             1 => 0,
-            2 => data.IndexOf((byte)0) + 1,
+            2 => data.IndexOf((byte)0) + 1
         };
         @DateTime = data.ReadUIntDateTime(ref offset);
-        Units = data.ReadFixedLengthString(ref offset,2);
+        Units = data.ReadFixedLengthString(ref offset, 2);
         Wavelength = data.ReadUShort(ref offset);
         AcquisitionOffset = data.ReadInt(ref offset);
         AcquisitionOffsetDistance = format switch
         {
             1 => 0,
-            2 => data.ReadInt(ref offset),
+            2 => data.ReadInt(ref offset)
         };
         NumberOfTraces = data.ReadUShort(ref offset);
-        PulseWidth = new();
-        SampleSpacing = new();
-        NumberOfDataPointsInTrace = new();
-        for (int i = 0; i < NumberOfTraces; i++)
+        PulseWidth = new List<ushort>();
+        SampleSpacing = new List<uint>();
+        NumberOfDataPointsInTrace = new List<uint>();
+        for (var i = 0; i < NumberOfTraces; i++)
         {
             PulseWidth.Add(data.ReadUShort(ref offset));
             SampleSpacing.Add(data.ReadUInt(ref offset));
             NumberOfDataPointsInTrace.Add(data.ReadUInt(ref offset));
         }
+
         IndexOfRefraction = data.ReadUInt(ref offset);
         BackscatteringCoefficient = data.ReadUShort(ref offset);
         NumberOfAverages = data.ReadUInt(ref offset);
@@ -139,4 +137,3 @@ public class FxdParamsData
         }
     }
 }
-

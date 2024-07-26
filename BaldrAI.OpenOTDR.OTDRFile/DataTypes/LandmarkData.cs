@@ -34,5 +34,4 @@ public class LandmarkData
         ModeFieldDiameterLeavingLandmark = data.ReadShort(ref offset);
         Comment = data.ReadTerminatedString(ref offset);
     }
-
 }

@@ -18,7 +18,10 @@ public class GenParamsData
     public string Operator;
     public string Comments;
 
-    public GenParamsData(string language = "EN", string cableID = "C/001", string fiberID = "F/001", ushort fiberType = 657, ushort wavelength = 1550, string locationA = "A", string locationB = "B", string cableCode = "ITU-T G.657", string buildCondition = "BC", int userOffset = 0, int userOffsetDistance = 0, string @operator="User1", string comments = "No Comments")
+    public GenParamsData(string language = "EN", string cableID = "C/001", string fiberID = "F/001",
+        ushort fiberType = 657, ushort wavelength = 1550, string locationA = "A", string locationB = "B",
+        string cableCode = "ITU-T G.657", string buildCondition = "BC", int userOffset = 0, int userOffsetDistance = 0,
+        string @operator = "User1", string comments = "No Comments")
     {
         Language = language;
         CableId = cableID;
@@ -64,4 +67,3 @@ public class GenParamsData
         Comments = data.ReadTerminatedString(ref offset).Trim();
     }
 }
-

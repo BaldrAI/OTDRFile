@@ -10,10 +10,7 @@ public class KeyEventList(List<KeyEventData> data, KeyEventConfig? config = null
 
     public IEnumerator<KeyEvent> GetEnumerator()
     {
-        foreach (var keyeventData in Data)
-        {
-            yield return new KeyEvent(keyeventData, Config);
-        }
+        foreach (var keyeventData in Data) yield return new KeyEvent(keyeventData, Config);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -40,10 +37,7 @@ public class KeyEventList(List<KeyEventData> data, KeyEventConfig? config = null
 
     public void CopyTo(KeyEvent[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++)
-        {
-            array[arrayIndex + i] = new KeyEvent(Data[i]);
-        }
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new KeyEvent(Data[i]);
     }
 
     public bool Remove(KeyEvent item)

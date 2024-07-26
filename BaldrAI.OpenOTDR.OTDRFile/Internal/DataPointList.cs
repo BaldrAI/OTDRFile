@@ -10,10 +10,7 @@ public class DataPointList(ref List<ushort> data, TraceConfig? config = null) : 
 
     public IEnumerator<double> GetEnumerator()
     {
-        foreach (var dataPointData in Data)
-        {
-            yield return dataPointData * Config.DecibelsSF;
-        }
+        foreach (var dataPointData in Data) yield return dataPointData * Config.DecibelsSF;
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -25,7 +22,7 @@ public class DataPointList(ref List<ushort> data, TraceConfig? config = null) : 
     {
         if (uint.MaxValue < Data.Count + 1)
             throw new ArgumentOutOfRangeException(nameof(item));
-        Data.Add((ushort)(item/Config.DecibelsSF));
+        Data.Add((ushort)(item / Config.DecibelsSF));
     }
 
     public void Clear()
@@ -40,10 +37,7 @@ public class DataPointList(ref List<ushort> data, TraceConfig? config = null) : 
 
     public void CopyTo(double[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++)
-        {
-            array[arrayIndex + i] = (ushort)(Data[i]/Config.DecibelsSF);
-        }
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = (ushort)(Data[i] / Config.DecibelsSF);
     }
 
     public bool Remove(double item)

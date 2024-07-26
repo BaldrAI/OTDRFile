@@ -14,7 +14,8 @@ public class KeyEventsData
     public int OpticalReturnLossMarker2;
 
 
-    public KeyEventsData(ushort numberOfEvents, List<KeyEventData> events, int endToEndLoss, int endToEndLossMarker1, int endToEndLossMarker2, ushort opticalReturnLoss, int opticalReturnLossMarker1, int opticalReturnLossMarker2)
+    public KeyEventsData(ushort numberOfEvents, List<KeyEventData> events, int endToEndLoss, int endToEndLossMarker1,
+        int endToEndLossMarker2, ushort opticalReturnLoss, int opticalReturnLossMarker1, int opticalReturnLossMarker2)
     {
         NumberOfEvents = numberOfEvents;
         Events = events;
@@ -39,12 +40,10 @@ public class KeyEventsData
             default:
                 throw new ArgumentException("unrecognised filetype");
         }
+
         NumberOfEvents = data.ReadUShort(ref offset);
         Events = new List<KeyEventData>();
-        for (ushort i = 0; i < NumberOfEvents; i++)
-        {
-            Events.Add(new KeyEventData(data, ref offset, format));
-        }
+        for (ushort i = 0; i < NumberOfEvents; i++) Events.Add(new KeyEventData(data, ref offset, format));
         EndToEndLoss = data.ReadInt(ref offset);
         EndToEndLossMarker1 = data.ReadInt(ref offset);
         EndToEndLossMarker2 = data.ReadInt(ref offset);
@@ -53,4 +52,3 @@ public class KeyEventsData
         OpticalReturnLossMarker2 = data.ReadInt(ref offset);
     }
 }
-

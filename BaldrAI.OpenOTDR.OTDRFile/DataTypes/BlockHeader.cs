@@ -9,6 +9,7 @@ internal class BlockHeader
     public int Offset { get; }
     public int Length { get; }
     public int HeaderLength { get; }
+
     public BlockHeader(Span<byte> data, int offset)
     {
         var innerOffset = 0;

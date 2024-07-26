@@ -20,7 +20,9 @@ public class KeyEventData
     public uint Location5;
     public string Comment;
 
-    public KeyEventData(ushort eventNumber, uint timeOfTravel, short slope, short loss, int reflection, string reflectionType, string type, string landmarkNumber, string lossMeasurementTechnique, uint location1, uint location2, uint location3, uint location4, uint location5, string comment)
+    public KeyEventData(ushort eventNumber, uint timeOfTravel, short slope, short loss, int reflection,
+        string reflectionType, string type, string landmarkNumber, string lossMeasurementTechnique, uint location1,
+        uint location2, uint location3, uint location4, uint location5, string comment)
     {
         EventNumber = eventNumber;
         TimeOfTravel = timeOfTravel;
@@ -48,7 +50,7 @@ public class KeyEventData
         Reflection = data.ReadInt(ref offset);
         ReflectionType = data.ReadFixedLengthString(ref offset, 1);
         Type = data.ReadFixedLengthString(ref offset, 1);
-        LandmarkNumber= data.ReadFixedLengthString(ref offset, 4);
+        LandmarkNumber = data.ReadFixedLengthString(ref offset, 4);
         LossMeasurementTechnique = data.ReadFixedLengthString(ref offset, 2);
         if (format > 1)
         {
@@ -66,42 +68,43 @@ public class KeyEventData
             Location4 = 0;
             Location5 = 0;
         }
+
         Comment = data.ReadTerminatedString(ref offset);
     }
 
-    public override bool Equals(Object o)
+    public override bool Equals(object o)
     {
-        if (o is not KeyEventData comp) 
+        if (o is not KeyEventData comp)
             return false;
-        if (comp.EventNumber != this.EventNumber)
+        if (comp.EventNumber != EventNumber)
             return false;
-        if (comp.TimeOfTravel != this.TimeOfTravel)
+        if (comp.TimeOfTravel != TimeOfTravel)
             return false;
-        if (comp.Slope != this.Slope)
+        if (comp.Slope != Slope)
             return false;
-        if (comp.Loss != this.Loss)
+        if (comp.Loss != Loss)
             return false;
-        if (comp.Reflection != this.Reflection)
+        if (comp.Reflection != Reflection)
             return false;
-        if (comp.ReflectionType != this.ReflectionType)
+        if (comp.ReflectionType != ReflectionType)
             return false;
-        if (comp.Type != this.Type)
+        if (comp.Type != Type)
             return false;
-        if (comp.LandmarkNumber != this.LandmarkNumber)
+        if (comp.LandmarkNumber != LandmarkNumber)
             return false;
-        if (comp.LossMeasurementTechnique != this.LossMeasurementTechnique)
+        if (comp.LossMeasurementTechnique != LossMeasurementTechnique)
             return false;
-        if (comp.Location1 != this.Location1)
+        if (comp.Location1 != Location1)
             return false;
-        if (comp.Location2 != this.Location2)
+        if (comp.Location2 != Location2)
             return false;
-        if (comp.Location3 != this.Location3)
+        if (comp.Location3 != Location3)
             return false;
-        if (comp.Location4 != this.Location4)
+        if (comp.Location4 != Location4)
             return false;
-        if (comp.Location5 != this.Location5)
+        if (comp.Location5 != Location5)
             return false;
-        if (comp.Comment != this.Comment)
+        if (comp.Comment != Comment)
             return false;
         return true;
     }

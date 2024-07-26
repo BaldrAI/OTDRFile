@@ -44,7 +44,9 @@ public class FxdParams(ref OTDRData data)
         set
         {
             Data.AcquisitionOffset = value;
-            Data.AcquisitionOffsetDistance = (int)Math.Round(value / Config.AcquisitionOffsetDistanceSF * (Constants.SpeedOfLightMilliSecs[Units] / IndexOfRefraction));
+            Data.AcquisitionOffsetDistance = (int)Math.Round(value / Config.AcquisitionOffsetDistanceSF *
+                                                             (Constants.SpeedOfLightMilliSecs[Units] /
+                                                              IndexOfRefraction));
         }
     }
 
@@ -54,7 +56,8 @@ public class FxdParams(ref OTDRData data)
         set
         {
             Data.AcquisitionOffsetDistance = (int)(value * Config.AcquisitionOffsetDistanceSF);
-            Data.AcquisitionOffset = (int)Math.Round(value * Config.AcquisitionOffsetDistanceSF / (Constants.SpeedOfLightMilliSecs[Units] / IndexOfRefraction));
+            Data.AcquisitionOffset = (int)Math.Round(value * Config.AcquisitionOffsetDistanceSF /
+                                                     (Constants.SpeedOfLightMilliSecs[Units] / IndexOfRefraction));
         }
     }
 
@@ -112,7 +115,9 @@ public class FxdParams(ref OTDRData data)
         set
         {
             Data.AcquisitionRange = (uint)value;
-            Data.AcquisitionRangeDistance = (uint)Math.Round(value * Config.AcquisitionRangeDistanceSF * (Constants.SpeedOfLightMilliSecs["km"] / IndexOfRefraction));
+            Data.AcquisitionRangeDistance = (uint)Math.Round(value * Config.AcquisitionRangeDistanceSF *
+                                                             (Constants.SpeedOfLightMilliSecs["km"] /
+                                                              IndexOfRefraction));
         }
     }
 
@@ -122,7 +127,8 @@ public class FxdParams(ref OTDRData data)
         set
         {
             Data.AcquisitionRangeDistance = (uint)value;
-            Data.AcquisitionRange = (uint)Math.Round(value / Config.AcquisitionRangeDistanceSF / (Constants.SpeedOfLightMilliSecs["km"] / IndexOfRefraction));
+            Data.AcquisitionRange = (uint)Math.Round(value / Config.AcquisitionRangeDistanceSF /
+                                                     (Constants.SpeedOfLightMilliSecs["km"] / IndexOfRefraction));
         }
     }
 

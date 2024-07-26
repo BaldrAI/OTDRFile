@@ -19,11 +19,6 @@ public class LocParamsData
                 throw new ArgumentException("unrecognised filetype");
         }
 
-        for (ushort i = 0; i < NumberOfLocations; i++)
-        {
-            Locations.Add(new LocationData(data, ref offset));
-        }
-
+        for (ushort i = 0; i < NumberOfLocations; i++) Locations.Add(new LocationData(data, ref offset));
     }
 }
-

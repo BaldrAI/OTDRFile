@@ -9,10 +9,7 @@ public class TraceList(ref List<TraceData> data) : IList<Trace>
 
     public IEnumerator<Trace> GetEnumerator()
     {
-        for (var i = 0; i<Data.Count; i++)
-        {
-            yield return new(Data[i]);
-        }
+        for (var i = 0; i < Data.Count; i++) yield return new Trace(Data[i]);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -39,10 +36,7 @@ public class TraceList(ref List<TraceData> data) : IList<Trace>
 
     public void CopyTo(Trace[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++)
-        {
-            array[arrayIndex + i] = new Trace(Data[i]);
-        }
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new Trace(Data[i]);
     }
 
     public bool Remove(Trace item)

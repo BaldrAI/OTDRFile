@@ -1,7 +1,5 @@
-﻿
-using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
 using BaldrAI.OpenOTDR.OTDRFile.Implementation;
-using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile;
 
@@ -29,7 +27,5 @@ public class OTDRFile
         LnkParams = new LnkParams(ref Data);
         LocParams = new LocParams(ref Data);
         DataPts = new DataPts(ref Data);
-
     }
 }
-

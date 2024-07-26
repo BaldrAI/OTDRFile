@@ -8,7 +8,6 @@ public class LandmarkConfig(double? longitudeSF = null, double? latitudeSF = nul
     // These are best-guesses based on the max-value of an `int32` and the required max-values for longitude and latitude.
 }
 
-
 public class Landmark
 {
     public LandmarkData Data { get; }
@@ -19,51 +18,61 @@ public class Landmark
         get => Data.LandmarkNumber;
         set => Data.LandmarkNumber = value;
     }
+
     public string Type
     {
         get => Data.Type;
         set => Data.Type = value;
     }
+
     public int Location
     {
         get => Data.Location;
         set => Data.Location = value;
     }
+
     public ushort EventNumber
     {
         get => Data.EventNumber;
         set => Data.EventNumber = value;
     }
+
     public double Longitude
     {
         get => Data.Longitude / Config.LongitudeSF;
-        set => Data.Longitude = (int)(value*Config.LongitudeSF);
+        set => Data.Longitude = (int)(value * Config.LongitudeSF);
     }
+
     public double Latitude
     {
         get => Data.Latitude / Config.LatitudeSF;
         set => Data.Latitude = (int)(value * Config.LatitudeSF);
     }
+
     public short CorrectionFactor
     {
         get => Data.CorrectionFactor;
         set => Data.CorrectionFactor = value;
     }
+
     public int SheathMarkerEnteringLandmark
     {
         get => Data.SheathMarkerEnteringLandmark;
         set => Data.SheathMarkerEnteringLandmark = value;
     }
+
     public int SheathMarkerLeavingLandmark
     {
         get => Data.SheathMarkerLeavingLandmark;
         set => Data.SheathMarkerLeavingLandmark = value;
     }
+
     public short ModeFieldDiameterLeavingLandmark
     {
         get => Data.ModeFieldDiameterLeavingLandmark;
         set => Data.ModeFieldDiameterLeavingLandmark = value;
     }
+
     public string Comment
     {
         get => Data.Comment;
@@ -81,5 +90,4 @@ public class Landmark
         Data = data;
         Config = config ?? new LandmarkConfig();
     }
-
 }

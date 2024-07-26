@@ -10,10 +10,7 @@ public class LandmarkList(List<LandmarkData> data, LandmarkConfig? config = null
 
     public IEnumerator<Landmark> GetEnumerator()
     {
-        foreach (var landmarkData in Data)
-        {
-            yield return new Landmark(landmarkData, Config);
-        }
+        foreach (var landmarkData in Data) yield return new Landmark(landmarkData, Config);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -40,10 +37,7 @@ public class LandmarkList(List<LandmarkData> data, LandmarkConfig? config = null
 
     public void CopyTo(Landmark[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++)
-        {
-            array[arrayIndex + i] = new Landmark(Data[i]);
-        }
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new Landmark(Data[i]);
     }
 
     public bool Remove(Landmark item)

@@ -11,10 +11,7 @@ public class LocationList(List<LocationData> data, LocationConfig? config = null
 
     public IEnumerator<Location> GetEnumerator()
     {
-        foreach (var locationData in Data)
-        {
-            yield return new Location(locationData, Config);
-        }
+        foreach (var locationData in Data) yield return new Location(locationData, Config);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -41,10 +38,7 @@ public class LocationList(List<LocationData> data, LocationConfig? config = null
 
     public void CopyTo(Location[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++)
-        {
-            array[arrayIndex + i] = new Location(Data[i]);
-        }
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new Location(Data[i]);
     }
 
     public bool Remove(Location item)

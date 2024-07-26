@@ -12,7 +12,9 @@ public class SupParamsData
     public string SoftwareVersion;
     public string Other;
 
-    public SupParamsData(string supplierName = "Supplier", string otdrName = "DeviceName", string otdrSerialNumber = "S00001", string moduleName = "ModuleName", string moduleSerialNumber = "S00002", string softwareVersion = "Build 12345", string other = "")
+    public SupParamsData(string supplierName = "Supplier", string otdrName = "DeviceName",
+        string otdrSerialNumber = "S00001", string moduleName = "ModuleName", string moduleSerialNumber = "S00002",
+        string softwareVersion = "Build 12345", string other = "")
     {
         SupplierName = supplierName;
         OtdrName = otdrName;
@@ -43,7 +45,6 @@ public class SupParamsData
         ModuleName = data.ReadTerminatedString(ref offset).Trim();
         ModuleSerialNumber = data.ReadTerminatedString(ref offset).Trim();
         SoftwareVersion = data.ReadTerminatedString(ref offset).Trim();
-        Other =  data.ReadTerminatedString(ref offset).Trim();
+        Other = data.ReadTerminatedString(ref offset).Trim();
     }
 }
-

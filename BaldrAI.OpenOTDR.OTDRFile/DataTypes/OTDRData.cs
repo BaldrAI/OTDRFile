@@ -1,5 +1,4 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Implementation;
-using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.DataTypes;
 
@@ -31,7 +30,7 @@ public class OTDRData
         }
 
         Version = span.ReadUShort(ref offset) / 100.0;
-        int nextBlockOffset = (int)span.ReadUInt(ref offset);
+        var nextBlockOffset = (int)span.ReadUInt(ref offset);
         var numBlocks = span.ReadUShort(ref offset);
         var nextBlockInfoStart = offset;
         Dictionary<string, BlockHeader> blockHeaders = new();
@@ -44,32 +43,35 @@ public class OTDRData
         }
 
         foreach (var kvp in blockHeaders)
-        {
             switch (kvp.Key)
             {
                 case "GenParams":
-                    GenParamsRaw = new GenParamsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    GenParamsRaw = new GenParamsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "SupParams":
-                    SupParamsRaw = new SupParamsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    SupParamsRaw = new SupParamsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "FxdParams":
-                    FxdParamsRaw = new FxdParamsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    FxdParamsRaw = new FxdParamsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "KeyEvents":
-                    KeyEventsRaw = new KeyEventsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    KeyEventsRaw = new KeyEventsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "LnkParams":
-                    LnkParamsRaw = new LnkParamsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    LnkParamsRaw = new LnkParamsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "LocParams":
-                    LocParamsRaw = new LocParamsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    LocParamsRaw = new LocParamsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)],
+                        format);
                     break;
                 case "DataPts":
-                    DataPtsRaw = new DataPtsData(span[(kvp.Value.Offset)..(kvp.Value.Offset + kvp.Value.Length)], format);
+                    DataPtsRaw = new DataPtsData(span[kvp.Value.Offset..(kvp.Value.Offset + kvp.Value.Length)], format);
                     break;
             }
-        }
     }
 }
-

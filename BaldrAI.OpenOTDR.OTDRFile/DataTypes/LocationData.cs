@@ -4,7 +4,6 @@ namespace BaldrAI.OpenOTDR.OTDRFile;
 
 public class LocationData
 {
-
     public string LocationNumber;
     public uint LocationDistance;
     public short LocationDrift;
@@ -33,5 +32,4 @@ public class LocationData
         FiberIDExitingLocation = data.ReadTerminatedString(ref offset);
         Comment = data.ReadTerminatedString(ref offset);
     }
-
 }

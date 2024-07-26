@@ -1,5 +1,4 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.Implementation;
-using BaldrAI.OpenOTDR.OTDRFile.Internal;
+﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile;
 
@@ -22,14 +21,10 @@ public class DataPtsData
             default:
                 throw new ArgumentException("unrecognised filetype");
         }
+
         NumberOfDataPoints = data.ReadUInt(ref offset);
         NumberOfTraces = data.ReadUShort(ref offset);
-        Traces = new();
-        for (ushort i = 0; i < NumberOfTraces; i++)
-        {
-            Traces.Add(new TraceData(data, ref offset));
-        }
-
+        Traces = new List<TraceData>();
+        for (ushort i = 0; i < NumberOfTraces; i++) Traces.Add(new TraceData(data, ref offset));
     }
 }
-
