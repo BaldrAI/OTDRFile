@@ -20,6 +20,18 @@
 
 	<PropertyGroup>
 	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
+	  <Title>OTDRFile</Title>
+	  <Company>BaldrAI</Company>
+	  <Copyright>BaldrAI Ltd. 2024</Copyright>
+	  <Description>OTDRFile is a C#/.Net library designed to read data files from OTDR measurement devices.
+Capable of reading OpenSOD (SOD Files) and SR-4731 (SOR Files).</Description>
+	  <PackageProjectUrl>https://github.com/BaldrAI/OTDRFile</PackageProjectUrl>
+	  <PackageIcon>BaldrAI-Logo.png</PackageIcon>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <RepositoryUrl>https://github.com/BaldrAI/OTDRFile</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageTags>otdr;sor;opensod;optical time delay reflectometry;optics;fibre;fiber;maui</PackageTags>
+	  <PublishAot>True</PublishAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
@@ -51,6 +63,17 @@
 	  <Folder Include="Platforms\Android\" />
 	  <Folder Include="Platforms\MacCatalyst\" />
 	  <Folder Include="Platforms\Windows\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\BaldrAI-Logo.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
