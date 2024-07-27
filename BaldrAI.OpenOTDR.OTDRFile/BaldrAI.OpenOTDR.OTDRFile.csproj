@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android34.0</TargetFrameworks>
@@ -32,6 +32,12 @@ Capable of reading OpenSOD (SOD Files) and SR-4731 (SOR Files).</Description>
 	  <RepositoryType>git</RepositoryType>
 	  <PackageTags>otdr;sor;opensod;optical time delay reflectometry;optics;fibre;fiber;maui</PackageTags>
 	  <PublishAot>True</PublishAot>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	  <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+	  <AssemblyVersion>0.1</AssemblyVersion>
+	  <FileVersion>$(AssemblyVersion)</FileVersion>
+	  <Version>$(AssemblyVersion)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
@@ -67,6 +73,10 @@ Capable of reading OpenSOD (SOD Files) and SR-4731 (SOR Files).</Description>
 
 	<ItemGroup>
 	  <None Include="..\BaldrAI-Logo.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\LICENSE.txt">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
