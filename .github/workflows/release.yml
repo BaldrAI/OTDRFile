@@ -1,4 +1,4 @@
-name: Push to NuGet
+name: Release
 
 on:
   release:
@@ -18,7 +18,12 @@ jobs:
           source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
-      - run: dotnet build --no-restore /p:Version=$VERSION --configuration Release BaldrAI.OpenOTDR.OTDRFile
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore /p:Version=$VERSION --configuration Release BaldrAI.OpenOTDR.OTDRFile
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
       - name: Create the package
         run: dotnet pack /p:Version=$VERSION --configuration Release BaldrAI.OpenOTDR.OTDRFile
       - name: Publish the package to GPR
