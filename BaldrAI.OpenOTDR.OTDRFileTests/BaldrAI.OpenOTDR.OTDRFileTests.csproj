@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestData\SORFiles\A-B.1310.500nS.50Km.sor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
@@ -28,13 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestData\SORFiles\" />
+    <Content Include="TestData\SORFiles\A-B.1310.500nS.50Km.sor">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\SORFiles\A-B.1310.500nS.50Km.sor">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\SORFiles\Dem013je.sor">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
