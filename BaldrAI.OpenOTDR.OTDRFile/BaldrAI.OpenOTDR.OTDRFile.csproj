@@ -18,7 +18,7 @@
 		<Copyright>BaldrAI Ltd. 2024</Copyright>
 		<RepositoryUrl>https://github.com/BaldrAI/OTDRFile</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageId>Com.BaldrAI.$(AssemblyName)</PackageId>
+		<PackageId>$(AssemblyName)</PackageId>
 		<PackageProjectUrl>https://github.com/BaldrAI/OTDRFile</PackageProjectUrl>
 		<PackageIcon>BaldrAI-Logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
