@@ -18,7 +18,7 @@ public class OtdrFileTests
     [TestMethod()]
     public void SORFileTest()
     {
-        var data = ReadFile(".\\TestData\\SORFiles\\A-B.1310.500nS.50Km.sor");
+        var data = ReadFile("./TestData/SORFiles/A-B.1310.500nS.50Km.sor");
         OTDRFile otdrFile = new(data);
         Assert.AreEqual((uint)200000, otdrFile.DataPts.NumberOfDataPoints);
         Assert.AreEqual((ushort)1, otdrFile.DataPts.NumberOfTraces);
