@@ -1,75 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android34.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
-		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
+		<TargetFramework>net8.0</TargetFramework>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">16.1</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<Platforms>AnyCPU;x64</Platforms>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>OTDRFile</Title>
+		<Company>BaldrAI</Company>
+		<Version>0.2.0</Version>
+		<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
+		<FileVersion>$(PackageVersion)</FileVersion>
+		<Description>
+			OTDRFile is a C#/.Net library designed to read data files from OTDR measurement devices.
+			Capable of reading OpenSOD (SOD Files) and SR-4731 (SOR Files).
+		</Description>
+		<Copyright>BaldrAI Ltd. 2024</Copyright>
+		<RepositoryUrl>https://github.com/BaldrAI/OTDRFile</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageId>Com.BaldrAI.$(AssemblyName)</PackageId>
+		<PackageProjectUrl>https://github.com/BaldrAI/OTDRFile</PackageProjectUrl>
+		<PackageIcon>BaldrAI-Logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<PackageTags>otdr;sor;opensod;optical time delay reflectometry;optics;fibre;fiber</PackageTags>
+		<PublishAot>True</PublishAot>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
-	<PropertyGroup>
-	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
-	  <Title>OTDRFile</Title>
-	  <Company>BaldrAI</Company>
-	  <Copyright>BaldrAI Ltd. 2024</Copyright>
-	  <Description>OTDRFile is a C#/.Net library designed to read data files from OTDR measurement devices.
-Capable of reading OpenSOD (SOD Files) and SR-4731 (SOR Files).</Description>
-	  <PackageProjectUrl>https://github.com/BaldrAI/OTDRFile</PackageProjectUrl>
-	  <PackageIcon>BaldrAI-Logo.png</PackageIcon>
-	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <RepositoryUrl>https://github.com/BaldrAI/OTDRFile</RepositoryUrl>
-	  <RepositoryType>git</RepositoryType>
-	  <PackageTags>otdr;sor;opensod;optical time delay reflectometry;optics;fibre;fiber;maui</PackageTags>
-	  <PublishAot>True</PublishAot>
-	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	  <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>0.2.0</AssemblyVersion>
-	  <FileVersion>$(AssemblyVersion)</FileVersion>
-	  <Version>$(AssemblyVersion)</Version>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Optimize>False</Optimize>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <MtouchUseLlvm>True</MtouchUseLlvm>
-	  <EnableSGenConc>True</EnableSGenConc>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|x64'">
-	  <MtouchUseLlvm>True</MtouchUseLlvm>
-	  <EnableSGenConc>True</EnableSGenConc>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <MtouchUseLlvm>False</MtouchUseLlvm>
-	  <EnableSGenConc>True</EnableSGenConc>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|x64'">
-	  <MtouchUseLlvm>False</MtouchUseLlvm>
-	  <EnableSGenConc>True</EnableSGenConc>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Platforms\Android\" />
-	  <Folder Include="Platforms\MacCatalyst\" />
-	  <Folder Include="Platforms\Windows\" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include="..\BaldrAI-Logo.png">
