@@ -23,7 +23,7 @@ public class OtdrFileTests
         Assert.AreEqual((uint)200000, otdrFile.DataPts.NumberOfDataPoints);
         Assert.AreEqual((ushort)1, otdrFile.DataPts.NumberOfTraces);
         Assert.AreEqual(0.001, otdrFile.DataPts.Traces[0].ScalingFactor);
-        Assert.AreEqual(2451696, otdrFile.FxdParams.AcquisitionRange);
+        Assert.AreEqual(245.1696, otdrFile.FxdParams.AcquisitionRange);
         Assert.AreEqual((ushort)652, otdrFile.GenParams.FiberType);
         Assert.AreEqual((ushort)1310, otdrFile.GenParams.Wavelength);
         Assert.AreEqual(1310, otdrFile.FxdParams.Wavelength);
