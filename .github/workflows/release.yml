@@ -29,5 +29,5 @@ jobs:
         run: dotnet build --no-restore /p:Version=$VERSION --configuration Release BaldrAI.OpenOTDR.OTDRFile
       - name: Create the package
         run: dotnet pack /p:Version=$VERSION --configuration Release BaldrAI.OpenOTDR.OTDRFile
-      - name: Publish the package to GPR
+      - name: Publish the package to NuGet
         run: dotnet nuget push BaldrAI.OpenOTDR.OTDRFile/bin/Release/*.nupkg -k ${{ secrets.NUGET_API_KEY }}
