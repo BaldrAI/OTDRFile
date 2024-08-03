@@ -23,7 +23,7 @@ public class OTDRFile
         GenParams = new GenParams(ref Data);
         SupParams = new SupParams(ref Data);
         FxdParams = new FxdParams(ref Data);
-        KeyEvents = new KeyEvents(ref Data);
+        KeyEvents = new KeyEvents(ref Data,  this);
         LnkParams = new LnkParams(ref Data);
         LocParams = new LocParams(ref Data);
         DataPts = new DataPts(ref Data);

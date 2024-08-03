@@ -3,22 +3,11 @@ using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
-public class FxdParamsConfig(
-    double wavelengthSf = 10,
-    double acquisitionOffsetDistanceSf = 100.0,
-    double indexOfRefractionSF = 100000.0,
-    double acquisitionRangeDistanceSF = 10.0)
-{
-    public double WavelengthSF = wavelengthSf;
-    public double AcquisitionOffsetDistanceSF = acquisitionOffsetDistanceSf;
-    public double AcquisitionRangeDistanceSF = acquisitionRangeDistanceSF;
-    public double IndexOfRefractionSF = indexOfRefractionSF;
-}
+
 
 public class FxdParams(ref OTDRData data)
 {
     private FxdParamsData Data = data.FxdParamsRaw;
-    public FxdParamsConfig Config = new();
 
     public DateTime @DateTime
     {
@@ -34,8 +23,8 @@ public class FxdParams(ref OTDRData data)
 
     public double Wavelength
     {
-        get => Data.Wavelength / Config.WavelengthSF;
-        set => Data.Wavelength = (ushort)Math.Round(value * Config.WavelengthSF);
+        get => Data.Wavelength / Constants.WavelengthSF;
+        set => Data.Wavelength = (ushort)Math.Round(value * Constants.WavelengthSF);
     }
 
     public int AcquisitionOffset
@@ -44,20 +33,20 @@ public class FxdParams(ref OTDRData data)
         set
         {
             Data.AcquisitionOffset = value;
-            Data.AcquisitionOffsetDistance = (int)Math.Round(value / Config.AcquisitionOffsetDistanceSF *
-                                                             (Constants.SpeedOfLightMilliSecs[Units] /
-                                                              IndexOfRefraction));
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Units] / IndexOfRefraction;
+            var distance = value * adjustedSpeedOfLight;
+            Data.AcquisitionOffsetDistance = (int)Math.Round(distance);
         }
     }
 
     public double AcquisitionOffsetDistance
     {
-        get => Data.AcquisitionOffsetDistance / Config.AcquisitionOffsetDistanceSF;
+        get => Data.AcquisitionOffsetDistance;
         set
         {
-            Data.AcquisitionOffsetDistance = (int)(value * Config.AcquisitionOffsetDistanceSF);
-            Data.AcquisitionOffset = (int)Math.Round(value * Config.AcquisitionOffsetDistanceSF /
-                                                     (Constants.SpeedOfLightMilliSecs[Units] / IndexOfRefraction));
+            Data.AcquisitionOffsetDistance = (int)(value);
+            Data.AcquisitionOffset = (int)Math.Round(value /
+                                                     (Constants.SpeedOfLightMicroSecs[Units] / IndexOfRefraction));
         }
     }
 
@@ -73,10 +62,19 @@ public class FxdParams(ref OTDRData data)
         set => Data.PulseWidth = value;
     }
 
-    public List<uint> SampleSpacing
+    public List<double> SampleSpacing
     {
-        get => Data.SampleSpacing;
-        set => Data.SampleSpacing = value;
+        get => Data.SampleSpacing.Select(item => item / Constants.SampleSpacingSF).ToList();
+        set => Data.SampleSpacing = value.Select(item => (uint)(item * Constants.SampleSpacingSF)).ToList();
+    }
+
+    public List<double> Resolution
+    {
+        get
+        {
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs["km"] / IndexOfRefraction;
+            return Data.SampleSpacing.Select(item => (item / Constants.SampleSpacingSF)*adjustedSpeedOfLight).ToList();
+        }
     }
 
     public List<uint> NumberOfDataPointsInTrace
@@ -87,8 +85,8 @@ public class FxdParams(ref OTDRData data)
 
     public double IndexOfRefraction
     {
-        get => Data.IndexOfRefraction / Config.IndexOfRefractionSF;
-        set => Data.IndexOfRefraction = (uint)(value * Config.IndexOfRefractionSF);
+        get => Data.IndexOfRefraction / Constants.IndexOfRefractionSF;
+        set => Data.IndexOfRefraction = (uint)(value * Constants.IndexOfRefractionSF);
     }
 
     public ushort BackscatteringCoefficient
@@ -111,24 +109,25 @@ public class FxdParams(ref OTDRData data)
 
     public double AcquisitionRange
     {
-        get => Data.AcquisitionRange;
+        get => Data.AcquisitionRange / Constants.AcquisitionRangeSF;
         set
         {
-            Data.AcquisitionRange = (uint)value;
-            Data.AcquisitionRangeDistance = (uint)Math.Round(value * Config.AcquisitionRangeDistanceSF *
-                                                             (Constants.SpeedOfLightMilliSecs["km"] /
-                                                              IndexOfRefraction));
+            Data.AcquisitionRange = (uint)Math.Round(value / Constants.AcquisitionRangeSF);
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Units] / IndexOfRefraction;
+            var distance = value * adjustedSpeedOfLight;
+            Data.AcquisitionRangeDistance = (uint)Math.Round(distance);
         }
     }
 
     public double AcquisitionRangeDistance
     {
-        get => Data.AcquisitionRangeDistance / Config.AcquisitionRangeDistanceSF;
+        get => Data.AcquisitionRangeDistance;
         set
         {
             Data.AcquisitionRangeDistance = (uint)value;
-            Data.AcquisitionRange = (uint)Math.Round(value / Config.AcquisitionRangeDistanceSF /
-                                                     (Constants.SpeedOfLightMilliSecs["km"] / IndexOfRefraction));
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Units] / IndexOfRefraction;
+            var microseconds = value / adjustedSpeedOfLight;
+            Data.AcquisitionRange = (uint)Math.Round(microseconds * Constants.AcquisitionRangeSF);
         }
     }
 

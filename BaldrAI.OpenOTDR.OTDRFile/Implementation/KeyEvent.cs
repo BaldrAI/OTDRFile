@@ -1,17 +1,35 @@
-﻿namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
+﻿using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
-public class KeyEventConfig(double speedOfLightMetresPerNanoSecond = 0.20394044761904762, double decibelsSF = 0.001)
-{
-    public double
-        SpeedOfLightMetresPerNanoSecond = speedOfLightMetresPerNanoSecond; // Through fibre at the given wavelength
+namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
-    public double DecibelsSF = decibelsSF;
-}
 
 public class KeyEvent
 {
+    private OTDRFile Parent;
     public KeyEventData Data { get; }
-    public KeyEventConfig Config;
+
+    private static readonly Dictionary<string, string> _reflectionTypes = new()
+    {
+        {"0", "Non-Reflective"},
+        {"1", "Reflective"},
+        {"2", "Saturated"},
+    };
+
+    private static readonly Dictionary<string, string> _eventTypes = new()
+    {
+        {"A", "Added by user"},
+        {"M", "Modified by user"},
+        {"E", "End of fiber"},
+        {"F", "Found by software"},
+        {"O", "Out of range"},
+        {"D", "Modified end of fiber"},
+    };
+
+    private static readonly Dictionary<string, string> _lossTechniques = new()
+    {
+        {"LS", "Least-Square"},
+        {"2P", "Two-Point"},
+    };
 
     public ushort EventNumber
     {
@@ -19,46 +37,86 @@ public class KeyEvent
         set => Data.EventNumber = value;
     }
 
-    public uint TimeOfTravel
+    public double TimeOfTravel
     {
-        get => Data.TimeOfTravel;
-        set => Data.TimeOfTravel = value;
+        get => Data.TimeOfTravel / Constants.TimeOfTravelSF;
+        set => Data.TimeOfTravel = (uint)(value * Constants.TimeOfTravelSF);
     }
 
     public double Distance
     {
-        get => Data.TimeOfTravel * Config.SpeedOfLightMetresPerNanoSecond;
-        set => Data.TimeOfTravel = (uint)Math.Round(value / Config.SpeedOfLightMetresPerNanoSecond);
+        get
+        {
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Parent.FxdParams.Units] / Parent.FxdParams.IndexOfRefraction;
+            var distance = TimeOfTravel * adjustedSpeedOfLight;
+            return distance;
+        }
+        set
+        {
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Parent.FxdParams.Units] / Parent.FxdParams.IndexOfRefraction;
+            TimeOfTravel = (uint)Math.Round(value / adjustedSpeedOfLight);
+        }
+    }
+
+    public double DistanceMeters
+    {
+        get
+        {
+            var adjustedSpeedOfLight = Constants.SpeedOfLightMicroSecs[Parent.FxdParams.Units] / Parent.FxdParams.IndexOfRefraction;
+            var distance = TimeOfTravel * adjustedSpeedOfLight;
+            switch (Parent.FxdParams.Units)
+            {
+                default:
+                case "mt":
+                    return distance;
+                case "km":
+                    return distance * 1000.0;
+                case "ft":
+                    return distance * 0.3048;
+                case "kf":
+                    return distance * 304.8;
+                case "mi":
+                    return distance * 1609.34;
+            }
+        }
     }
 
     public double Slope
     {
-        get => Data.Slope * Config.DecibelsSF;
-        set => Data.Slope = (short)Math.Round(value / Config.DecibelsSF);
+        get => Data.Slope / Constants.DecibelsSF;
+        set => Data.Slope = (short)Math.Round(value * Constants.DecibelsSF);
     }
 
     public double Loss
     {
-        get => Data.Loss * Config.DecibelsSF;
-        set => Data.Loss = (short)Math.Round(value / Config.DecibelsSF);
+        get => Data.Loss / Constants.DecibelsSF;
+        set => Data.Loss = (short)Math.Round(value * Constants.DecibelsSF);
     }
 
     public double Reflection
     {
-        get => Data.Reflection * Config.DecibelsSF;
-        set => Data.Reflection = (short)Math.Round(value / Config.DecibelsSF);
+        get => Data.Reflection / Constants.DecibelsSF;
+        set => Data.Reflection = (short)Math.Round(value * Constants.DecibelsSF);
     }
 
     public string ReflectionType
     {
-        get => Data.ReflectionType;
-        set => Data.ReflectionType = value;
+        get => Data.ReflectionType.ToUpper();
+        set => Data.ReflectionType = value.ToUpper();
+    }
+    public string ReflectionTypeName
+    {
+        get => _reflectionTypes[ReflectionType];
     }
 
     public string Type
     {
-        get => Data.Type;
-        set => Data.Type = value;
+        get => Data.Type.ToUpper();
+        set => Data.Type = value.ToUpper();
+    }
+    public string TypeName
+    {
+        get => _eventTypes[Type];
     }
 
     public string LandmarkNumber
@@ -71,6 +129,11 @@ public class KeyEvent
     {
         get => Data.LossMeasurementTechnique;
         set => Data.LossMeasurementTechnique = value;
+    }
+
+    public string LossMeasurementTechniqueName
+    {
+        get => _lossTechniques[Data.LossMeasurementTechnique];
     }
 
     public double Location1
@@ -109,15 +172,10 @@ public class KeyEvent
         set => Data.Comment = value;
     }
 
-    public KeyEvent(KeyEventData data, KeyEventConfig? config = null)
+    public KeyEvent(KeyEventData data, OTDRFile parent)
     {
-        Config = config ?? new KeyEventConfig();
+        Parent = parent;
         Data = data;
     }
 
-    public KeyEvent(Span<byte> rawData, ref int offset, int format, KeyEventConfig? config = null)
-    {
-        Config = config ?? new KeyEventConfig();
-        Data = new KeyEventData(rawData, ref offset, format);
-    }
 }

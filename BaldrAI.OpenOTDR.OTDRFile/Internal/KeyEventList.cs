@@ -3,14 +3,14 @@ using BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Internal;
 
-public class KeyEventList(List<KeyEventData> data, KeyEventConfig? config = null) : IList<KeyEvent>
+public class KeyEventList(List<KeyEventData> data, OTDRFile parent) : IList<KeyEvent>
 {
+    public OTDRFile Parent = parent;
     public List<KeyEventData> Data = data;
-    private KeyEventConfig Config = config ?? new KeyEventConfig();
 
     public IEnumerator<KeyEvent> GetEnumerator()
     {
-        foreach (var keyeventData in Data) yield return new KeyEvent(keyeventData, Config);
+        foreach (var keyeventData in Data) yield return new KeyEvent(keyeventData, Parent);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -37,7 +37,7 @@ public class KeyEventList(List<KeyEventData> data, KeyEventConfig? config = null
 
     public void CopyTo(KeyEvent[] array, int arrayIndex)
     {
-        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new KeyEvent(Data[i]);
+        for (var i = 0; i < Data.Count; i++) array[arrayIndex + i] = new KeyEvent(Data[i], parent);
     }
 
     public bool Remove(KeyEvent item)
@@ -66,7 +66,7 @@ public class KeyEventList(List<KeyEventData> data, KeyEventConfig? config = null
 
     public KeyEvent this[int index]
     {
-        get => new(Data[index], Config);
+        get => new(Data[index], Parent);
         set => Data[index] = value.Data;
     }
 }

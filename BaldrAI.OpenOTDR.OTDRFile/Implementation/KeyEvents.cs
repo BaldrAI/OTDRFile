@@ -1,28 +1,22 @@
-﻿using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
+﻿using System.Reflection.Metadata;
+using BaldrAI.OpenOTDR.OTDRFile.DataTypes;
 using BaldrAI.OpenOTDR.OTDRFile.Internal;
 
 namespace BaldrAI.OpenOTDR.OTDRFile.Implementation;
 
-public class KeyEventsConfig(double speedOfLightMetresPerNanoSecond = 0.20394044761904762, double decibelsSF = 0.001)
-{
-    public double
-        SpeedOfLightMetresPerNanoSecond = speedOfLightMetresPerNanoSecond; // Through fibre at the given wavelength
 
-    public double DecibelsSF = decibelsSF;
-}
-
-public class KeyEvents(ref OTDRData data)
+public class KeyEvents(ref OTDRData data, OTDRFile parent)
 {
+    private OTDRFile Parent = parent;
     private KeyEventsData Data = data.KeyEventsRaw;
-    private KeyEventsConfig Config = new();
 
     public ushort NumberOfEvents => (ushort)Data.Events.Count;
-    public KeyEventList Events => new(Data.Events);
+    public KeyEventList Events => new(Data.Events, Parent);
 
     public double EndToEndLoss
     {
-        get => Data.EndToEndLoss * Config.DecibelsSF;
-        set => Data.EndToEndLoss = (int)Math.Round(value / Config.DecibelsSF);
+        get => Data.EndToEndLoss / Constants.DecibelsSF;
+        set => Data.EndToEndLoss = (int)Math.Round(value * Constants.DecibelsSF);
     }
 
     public int EndToEndLossMarker1
@@ -39,8 +33,8 @@ public class KeyEvents(ref OTDRData data)
 
     public double OpticalReturnLoss
     {
-        get => Data.OpticalReturnLoss * Config.DecibelsSF;
-        set => Data.OpticalReturnLoss = (ushort)Math.Round(value / Config.DecibelsSF);
+        get => Data.OpticalReturnLoss / Constants.DecibelsSF;
+        set => Data.OpticalReturnLoss = (ushort)Math.Round(value * Constants.DecibelsSF);
     }
 
     public int OpticalReturnLossMarker1
